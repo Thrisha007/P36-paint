@@ -7,6 +7,7 @@ var database;
 
 var form, player, game;
 var allPlayers;
+var clearButton;
 
 var drawing = [];
 var dbDrawing = [];
@@ -18,6 +19,9 @@ function setup(){
   game = new Game();
   game.getState();
   game.start();
+
+  clearButton = createButton('Clear');
+  clearButton.mousePressed(clearDrawing);
 }
 
 
@@ -37,7 +41,7 @@ function draw(){
   }
 
   if(gameState === 1){
-    clear();
+    //clear();
     //game.play();
     //form.hide();
     readData();
@@ -51,6 +55,12 @@ function draw(){
       endShape();
     }
   }
+
+  clearButton.position(300,300);
+
+  if(playerCount === 2){
+      game.update(1);
+  }
   }
 
   function readData(){
@@ -58,6 +68,12 @@ function draw(){
         dbDrawing = data.val().d
     })
   } 
+
+  function clearDrawing(){
+    dbDrawing = [];
+    var dbRef = database.ref('drawing');
+    dbRef.remove();
+  }
  
 
 
